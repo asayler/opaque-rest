@@ -11,13 +11,13 @@ By Andy Sayler
 
 ## Endpoints ##
 
-| Endpoint                                 | Method | Function              |
-| ---------------------------------------- |:------:| --------------------- |
-| /info/                                   | GET    | getEngineInfo()       |
-| /question/<base>/<id>/<version>          | GET    | getQuestionMetadata() |
-| /question/<base>/<id>/<version>/session/ | POST   | start()               |
-| /session/<id>/response/                  | PUT    | process()             |
-| /session/<id>/                           | DELETE | stop()                |
+| Endpoint                                   | Method | Function              |
+| ------------------------------------------ |:------:| --------------------- |
+| `/info/`                                   | GET    | getEngineInfo()       |
+| `/question/<base>/<id>/<version>/`         | GET    | getQuestionMetadata() |
+| `/question/<base>/<id>/<version>/session/` | POST   | start()               |
+| `/session/<id>/response/`                  | PUT    | process()             |
+| `/session/<id>/`                           | DELETE | stop()                |
 
 ## Functions ##
 

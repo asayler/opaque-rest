@@ -21,7 +21,7 @@ By Andy Sayler
 
 ## Functions ##
 
-### getEngineInfo(``) ###
+### getEngineInfo() ###
 #### Request ####
 ```
     <None>

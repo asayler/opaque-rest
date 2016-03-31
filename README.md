@@ -11,13 +11,13 @@ By Andy Sayler
 
 ## Endpoints ##
 
-| Endpoint                                   | Method | Function              |
-| ------------------------------------------ |:------:| --------------------- |
-| `/info/`                                   | GET    | getEngineInfo()       |
-| `/question/<base>/<id>/<version>/`         | GET    | getQuestionMetadata() |
-| `/question/<base>/<id>/<version>/session/` | POST   | start()               |
-| `/session/<id>/response/`                  | PUT    | process()             |
-| `/session/<id>/`                           | DELETE | stop()                |
+| Endpoint                                    | Method | Function                                        |
+| ------------------------------------------- |:------:| ----------------------------------------------- |
+| `/info/`                                    | GET    | getEngineInfo()                                 |
+| `/question/<base>/<qid>/<version>/`         | GET    | getQuestionMetadata(`<base>, <qid>, <version>`) |
+| `/question/<base>/<qid>/<version>/session/` | POST   | start(`<base>, <qid>, <version>`)               |
+| `/session/<sid>/response/`                  | PUT    | process(`<sid>`)                                |
+| `/session/<sid>/`                           | DELETE | stop(`<sid>`)                                   |
 
 ## Functions ##
 
@@ -35,7 +35,7 @@ By Andy Sayler
     }
 ```
 
-### getQuestionMetadata(`<base>, <id>, <version>`) ###
+### getQuestionMetadata(`<base>, <qid>, <version>`) ###
 #### Request ####
 ```
     <None>
@@ -50,12 +50,12 @@ By Andy Sayler
     }
 ```
 
-### start(`<base>, <id>, <versions>`) ###
+### start(`<base>, <qid>, <versions>`) ###
 #### Request ####
 ```
     {
       'randomseed': <int>,
-      'userid': '<string>',
+      'userid': '<uid>',
       'language': '<string>',
       'passKey': '<string>',
       'preferredbehavior': '<string>'
@@ -64,7 +64,7 @@ By Andy Sayler
 ### Response ###
 ```
     {
-      'questionSession': '<string>',
+      'questionSession': '<sid>',
       'XHTML': '<string>',
       'CSS': '<string>',
       'progressInfo': '<string>',
@@ -80,7 +80,7 @@ By Andy Sayler
     }
 ```
 
-### process(`<id>`) ###
+### process(`<sid>`) ###
 #### Request ####
 ```
     {
@@ -124,7 +124,7 @@ By Andy Sayler
     }
 ```
 
-### stop(`<id>`) ###
+### stop(`<sid>`) ###
 #### Request ####
 ```
     <None>

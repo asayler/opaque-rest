@@ -1,122 +1,37 @@
-'''
-/info/                                          GET     getEngineInfo()
-/question/<base>/<qid>/<version>/               GET     getQuestionMetadata(<base>, <qid>, <version>)
-/question/<base>/<qid>/<version>/session/       POST    start(<base>, <qid>, <version>)
-/session/<sid>/response/                        PUT     process(<sid>)
-/session/<sid>/                                 DELETE  stop(<sid>)
-'''
 #!/usr/bin/env python
 
+from flask import request
 from flask import Flask
+
+import base64
+import json
 
 app = Flask(__name__)
 
-'''
-Request
-	 None
-Response
-	'name': '<string>',
-	'usedmemory': '<string>', (optional)
-	'activesessions': <int> (optional)
-'''
-@app.route('/info/')
+@app.route('/info/', methods=['GET', 'POST'])
 def getEngineInfo():
-	return 'Info'
+	#return 'Info'
 
-'''
-Request
-	None
-Response
-{ 
-'scoring': {
-	   'marks': <int>
-	 },
-'plainmode': <true|false>
-}
-'''
-@app.route('/question/<base>/<qid>/<version>/')
+	#usedmemory and activesessions are optional. Return them with the json if they are flagged in the request
+	return json.dumps({'name': '<string>', 'usedmemory': '<string>', 'activesessions': '<int>'})
+
+@app.route('/question/<int:base>/<int:qid>/<int:version>/', methods=['GET', 'POST'])
 def getQuestionMetadata(base, qid, version):
 	return 'Question metadata'
 
-'''
-Request
-	'randomseed': <int>,
-	'userid': '<uid>',
-	'language': '<string>',
-	'passKey': '<string>',
-	'preferredbehavior': '<string>'
-Response
-	{
-	'questionSession': '<sid>',
-	'XHTML': '<string>',
-	'CSS': '<string>',
-	'progressInfo': '<string>',
-	'resources': [
-		     {
-		       'content': '<base64>',
-		       'encoding': '<string>',
-		       'filename': '<string>'
-		       'mimetype': '<string>'
-		     },
-		     ...
-		   ]
-	}
-'''
-@app.route('/question/<base>/<qid>/<version>/session/')
+@app.route('/question/<int:base>/<int:qid>/<int:version>/session/', methods=['GET', 'POST'])
 def start(base, qid, version):
-	return 'Start'
+	#return 'Start'
+	return '%s %s %s' % (base, qid+1, version)
 
-'''
-Request
-	{
-	'key1': 'val1',
-	'key2': 'val2',
-	...
-	}
-Response
-	{
-	'XHTML': '<string>',
-	'CSS': '<string>',
-	'progressInfo': '<string>',
-	'questionEnd': <true|false>
-	'resources': [
-		     {
-		       'content': '<base64>',
-		       'encoding': '<string>',
-		       'filename': '<string>'
-		       'mimetype': '<string>'
-		     },
-		     ...
-		   ]
-	'results': [
-		   {
-		     'questionLine': '<string>',
-		     'answerLine': '<string>',
-		     'actionSummary': '<string>',
-		     'attempts': <int>,
-		     'scores': {
-				 '<string>': <float>,
-				 ...
-			       }
-		     'customResults': {
-					'<string>': <string>,
-					 ...
-				       }
-		   }
-		 ]
-	}
-'''
-@app.route('/session/<sid>/response/')
+@app.route('/session/<int:sid>/response/', methods=['PUT'])
 def process(sid):
+
+	for arg in request.args:
+		print arg, request[arg]
 	return 'Process'
 
-'''
-Request
-	None
-Response
-	None
-'''
-@app.route('/session/<sid>/')
+@app.route('/session/<int:sid>/', methods=['DELETE'])
 def stop(sid):
 	return 'Stop'
 

@@ -28,36 +28,37 @@ class BeakerSessionInterface(SessionInterface):
 def index():
 	if not session.has_key('value'):
 		session['value'] = 'Save in session'
-		return "Session value set."
+		#return "Session value set."
+		#return session.keys()
+		for item in session:
+			print item
+		return
 	else:
-		return session['value']
-@app.route('/info/', methods=['GET', 'POST'])
+		#return session['value']
+		#return session.keys()
+		for item in session:
+			print item
+		return
+
+@app.route('/info/', methods=['GET'])
 def getEngineInfo():
-	#return 'Info'
+	return internal.getEngineInfo()
 
-	#usedmemory and activesessions are optional. Return them with the json if they are flagged in the request
-	#return json.dumps({'name': '<string>', 'usedmemory': '<string>', 'activesessions': '<int>'})
-	return internal.engineStatus()
-
-@app.route('/question/<int:base>/<int:qid>/<int:version>/', methods=['GET', 'POST'])
+@app.route('/question/<int:base>/<int:qid>/<int:version>/', methods=['GET'])
 def getQuestionMetadata(base, qid, version):
-	return 'Question metadata'
+	return internal.getQuestionMetadata(base, qid, version)
 
-@app.route('/question/<int:base>/<int:qid>/<int:version>/session/', methods=['GET', 'POST'])
+@app.route('/question/<int:base>/<int:qid>/<int:version>/session/', methods=['POST'])
 def start(base, qid, version):
-	#return 'Start'
-	return '%s %s %s' % (base, qid+1, version)
+	return internal.start(base, qid, version)
 
 @app.route('/session/<int:sid>/response/', methods=['PUT'])
 def process(sid):
-
-	for arg in request.args:
-		print arg, request[arg]
-	return 'Process'
+	return internal.process(sid)
 
 @app.route('/session/<int:sid>/', methods=['DELETE'])
 def stop(sid):
-	return 'Stop'
+	return internal.stop(sid)
 
 if __name__ == '__main__':
 	app.wsgi_app = SessionMiddleware(app.wsgi_app, session_opts)

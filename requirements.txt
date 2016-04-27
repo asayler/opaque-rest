@@ -2,4 +2,4 @@ system:
 	python-dev
 
 python:
-	psutil flask requests
+	psutil flask requests beaker

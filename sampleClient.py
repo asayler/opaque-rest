@@ -1,23 +1,63 @@
 #!/usr/bin/env python
 
 import requests
+import pprint
+import click
+
+@click.group()
+@click.option('--url', default=None, help="OPAQUE-Rest Base URL")
+@click.pass_context
+def cli(url):
+	global baseURL
+	if not baseURL:
+		baseURL = click.prompt("URL", type=str)
+	if baseURL[len(baseURL)-1] == '/':
+		baseURL = baseURL[:len(baseURL)-1]
+	menuMain()
 
 choice = ""
+baseURL = ""
 
 def getEngineInfo():
-	print "werks?"
+	global baseURL
+	url = baseURL + "/info"
+	try:
+		args = ""
+		r = requests.get(url, params=args)
+	except requests.exceptions as e:
+		x = 0 #Stub holder
 
 def getQuestionMetadata():
-	return
+	global baseURL
+        try:
+                args = ""
+                r = requests.get(url, params=args)
+        except requests.exceptions as e:
+                x = 0 #Stub holder
 
 def start():
-	return
+	global baseURL
+        try:
+                args = ""
+                r = requests.get(url, params=args)
+        except requests.exceptions as e:
+                x = 0 #Stub holder
 
 def process():
-	return
+	global baseURL
+        try:
+                args = ""
+                r = requests.get(url, params=args)
+        except requests.exceptions as e:
+                x = 0 #Stub holder
 
 def stop():
-	return
+	global baseURL
+        try:
+                args = ""
+                r = requests.get(url, params=args)
+        except requests.exceptions as e:
+                x = 0 #Stub holder
 
 def printMenu():
 	global choice
@@ -37,11 +77,10 @@ def printMenu():
 	except:
 		return False
 
-def main():
+def menuMain():
 	global choice
 	while True:
 		if printMenu():
-			'''
 			if choice == 1:
 				getEngineInfo()
 			elif choice == 2:
@@ -54,16 +93,8 @@ def main():
 				stop()
 			else:
 				exit()
-			'''
-			x = {
-				1: getEngineInfo(),
-				2: getQuestionMetadata(),
-				3: start(),
-				4: process(),
-				5: stop(),
-				6: exit()
-			}.get(choice, exit())
 		else:
 			print "Error: Not valid option"
-		print "wtf"
-main()
+
+if __name__ == '__main__':
+	cli()

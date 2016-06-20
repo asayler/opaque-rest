@@ -1,0 +1,5 @@
+system:
+	python-dev libmemcached-dev zlib1g-dev
+
+python:
+	psutil flask requests beaker
